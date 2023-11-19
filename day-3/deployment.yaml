@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: nginx-deployment
+  name: nginx-deployment
+  namespace: giropops
+spec:
+  replicas: 10
+  selector:
+    matchLabels:
+      app: nginx-deployment
+  strategy:
+    type: Recreate
+  template: #vai ser usado para a criação dos pods (quando criamos deplyment, cria-se pods)
+    metadata:
+      labels:
+        app: nginx-deployment
+    spec: #especificação dos containers/pods
+      containers:
+        - image: nginx:1.15.0
+          name: nginx #nome do containers e não dos deployments
+          resources:
+            limits:
+              cpu: "0.5"
+              memory: 256Mi
+            requests:
+              cpu: "0.25"
+              memory: 128Mi
